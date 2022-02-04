@@ -15,7 +15,7 @@ import {
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import Manager from '../artifacts/contracts/NFTManager.sol/NFTManager.json'
 
-let rpcEndpoint = "https://8545-fwalker007-dscscorekeepe-g7yfdv4p885.ws-us30.gitpod.io"
+let rpcEndpoint = "https://8545-fwalker007-dscscorekeepe-vi8aijvwlwp.ws-us30.gitpod.io"
 
 if (process.env.NEXT_PUBLIC_WORKSPACE_URL) 
 {
@@ -63,7 +63,6 @@ export default function Home()
       //Deconstruct input from form
       const name = "Samuel Hunter"
       const description = "School Record Disc"
-      const fileUrl = "D://DesktopBackup//Coin.PNG"
 
 //      const { name, description, price } = formInput
 //      if (!name || !description || !price || !fileUrl) return
@@ -167,6 +166,14 @@ export default function Home()
       <div>
       <h1 className="px-20 py-10 text-3xl">No Medals Created</h1>
       <div className="flex justify-center">
+
+      <input type="file" name="Asset" className="my-4" onChange={onChange} />
+        {
+          fileUrl && (
+            <img className="rounded mt-4" width="350" src={fileUrl} />
+          )
+        }
+
       <button onClick={CreateDigitalMedals} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
         Create Digital Medals
       </button>
@@ -178,8 +185,16 @@ export default function Home()
 
     return (
         <div className="flex justify-center">
+
+        <input type="file" name="Asset" className="my-4" onChange={onChange} />
+        {
+          fileUrl && (
+            <img className="rounded mt-4" width="350" src={fileUrl} />
+          )
+        }
+
           <button onClick={CreateDigitalMedals} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
-            Created
+            Create Digital Medals
           </button>
 
           <div className="px-4" style={{ maxWidth: '1600px' }}>
