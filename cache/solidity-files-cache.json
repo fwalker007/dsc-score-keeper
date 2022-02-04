@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/workspace/dsc-score-keeper/contracts/ScoreManager.sol": {
-      "lastModificationDate": 1643927842929,
-      "contentHash": "debb94b458235b9cd5d6726ab6835bc6",
+      "lastModificationDate": 1643945064974,
+      "contentHash": "438edfa3a181b7cc4dcac123ac994d5a",
       "sourceName": "contracts/ScoreManager.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -475,6 +475,121 @@
       ],
       "artifacts": [
         "IERC165"
+      ]
+    },
+    "/workspace/dsc-score-keeper/contracts/NFT.sol": {
+      "lastModificationDate": 1643946156071,
+      "contentHash": "09e14aed19b2750f633b38567e9a7cf8",
+      "sourceName": "contracts/NFT.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.3"
+      ],
+      "artifacts": [
+        "NFT"
+      ]
+    },
+    "/workspace/dsc-score-keeper/contracts/NFTManager.sol": {
+      "lastModificationDate": 1643946484795,
+      "contentHash": "d58c5871bf9d3948101eec6703999e63",
+      "sourceName": "contracts/NFTManager.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/security/ReentrancyGuard.sol",
+        "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.3"
+      ],
+      "artifacts": [
+        "NFTManager"
+      ]
+    },
+    "/workspace/dsc-score-keeper/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol": {
+      "lastModificationDate": 1643927639474,
+      "contentHash": "92f9448b23a90ea3bb932ee55cc3ccce",
+      "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ReentrancyGuard"
       ]
     }
   }
