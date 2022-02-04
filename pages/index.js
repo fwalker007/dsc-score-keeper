@@ -3,6 +3,11 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Web3Modal from "web3modal"
 
+import { create as ipfsHttpClient } from 'ipfs-http-client'
+import { useRouter } from 'next/router' 
+
+const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
+
 import {
   nftaddress, nftmanageraddress
 } from '../config'
@@ -10,7 +15,7 @@ import {
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import Manager from '../artifacts/contracts/NFTManager.sol/NFTManager.json'
 
-let rpcEndpoint = "https://8545-fwalker007-dscscorekeepe-h4eg3xg1lce.ws-us30.gitpod.io"
+let rpcEndpoint = "https://8545-fwalker007-dscscorekeepe-g7yfdv4p885.ws-us30.gitpod.io"
 
 if (process.env.NEXT_PUBLIC_WORKSPACE_URL) 
 {
@@ -21,6 +26,103 @@ export default function Home()
 {
     const [nfts, setNfts] = useState([])
     const [loadingState, setLoadingState] = useState('not-loaded')
+
+    const [fileUrl, setFileUrl] = useState(null)
+    const [formInput, updateFormInput] = useState({ name: '', description: '' })
+    const router = useRouter() 
+  
+    async function onChange(e) 
+    {
+      const file = e.target.files[0]
+      try 
+      {
+        console.log("OnChange:" )
+  
+        //Upload file to ipfs
+        const added = await client.add(
+          file,
+          {
+            progress: (prog) => console.log(`received: ${prog}`)
+          }
+        )
+        
+        const url = `https://ipfs.infura.io/ipfs/${added.path}`
+        setFileUrl(url)
+      }
+      catch (error) 
+      {
+        console.log('Error uploading file: ', error)
+      }  
+    }
+  
+    //Creates and saves item to IPFS
+    async function CreateDigitalMedals() 
+    {
+      console.log("Criating digital Medal ..." );
+  
+      //Deconstruct input from form
+      const name = "Samuel Hunter"
+      const description = "School Record Disc"
+      const fileUrl = "D://DesktopBackup//Coin.PNG"
+
+//      const { name, description, price } = formInput
+//      if (!name || !description || !price || !fileUrl) return
+ 
+      /* first, upload to IPFS */
+      const data = JSON.stringify({ name, description, image: fileUrl })
+
+      console.log("Data: %s " + data );
+
+      try 
+      {
+        const added = await client.add(data)
+        const url = `https://ipfs.infura.io/ipfs/${added.path}`
+  
+        console.log( "Medal added to IPFS : %s ", url )
+  
+        /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
+        createSale(url)
+      } 
+      catch (error) 
+      {
+        console.log('Error uploading file: ', error)
+      }  
+    }
+  
+    async function createSale(url) 
+    {
+      console.log( "Adding Medal to contract " )
+
+      const web3Modal = new Web3Modal()
+      const connection = await web3Modal.connect()
+      const provider = new ethers.providers.Web3Provider(connection)    
+      const signer = provider.getSigner()
+      
+      /* next, create the item */
+      let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
+
+      console.log( "Call create token " )
+      let transaction = await contract.CreateMedalToken(url)
+      let tx = await transaction.wait()
+  
+      console.log( "Medal token created %d ", transaction )
+
+      let event = tx.events[0]
+      let value = event.args[2]
+      let tokenId = value.toNumber()
+    
+      /* then list the item for sale on the marketplace */
+      contract = new ethers.Contract(nftmanageraddress, Manager.abi, signer)
+     // let listingPrice = await contract.getListingPrice()
+     // listingPrice = listingPrice.toString()
+  
+      transaction = await contract.CreateDigitalMedal(nftaddress, tokenId)
+      await transaction.wait()
+
+      console.log( "Done Creating medal! " )
+
+      router.push('/')
+    }
 
     useEffect(() => 
     {
@@ -35,12 +137,16 @@ export default function Home()
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
         const marketContract = new ethers.Contract(nftmanageraddress, Manager.abi, provider)
         const data = await marketContract.fetchMyNFTs()
-        
+           
+        console.log("GOT HERE 2");
+
         const items = await Promise.all(data.map(async i => 
         {
           const tokenUri = await tokenContract.tokenURI(i.tokenId)
           const meta = await axios.get(tokenUri)
    
+          console.log("GOT HERE 2.3");
+
           let item = {
             itemId: i.itemId.toNumber(),
             owner: i.owner,
@@ -54,15 +160,28 @@ export default function Home()
         setLoadingState('loaded') 
     }
 
-    console.log("GOT HERE 2 ");
+    console.log("GOT HERE 2.8 NFTs count: " + nfts.length);
 
     console.log(loadingState);
-    if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No NFTs HAVE BEEN CREATED</h1>)
+    if (loadingState === 'loaded' && !nfts.length) return (
+      <div>
+      <h1 className="px-20 py-10 text-3xl">No Medals Created</h1>
+      <div className="flex justify-center">
+      <button onClick={CreateDigitalMedals} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+        Create Digital Medals
+      </button>
+      </div>
+      </div>
+      )
 
     console.log("GOT HERE 3 ");
 
     return (
         <div className="flex justify-center">
+          <button onClick={CreateDigitalMedals} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+            Created
+          </button>
+
           <div className="px-4" style={{ maxWidth: '1600px' }}>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
               {
@@ -74,10 +193,6 @@ export default function Home()
                       <div style={{ height: '70px', overflow: 'hidden' }}>
                         <p className="text-gray-400">{nft.description}</p>
                       </div>
-                    </div>
-                    <div className="p-4 bg-black">
-                      <p className="text-2xl mb-4 font-bold text-white">{nft.price} ETH</p>
-                      <button className="w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onClick={() => buyNft(nft)}>Buy</button>
                     </div>
                   </div>
                 ))

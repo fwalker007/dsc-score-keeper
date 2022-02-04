@@ -8,18 +8,18 @@ describe("NFTManager", function ()
       const Manager = await ethers.getContractFactory("NFTManager")
       const manager = await Manager.deploy()
       await manager.deployed()
-      const marketAddress = manager.address
+      const managerAddress = manager.address
   
       const NFT = await ethers.getContractFactory("NFT")
-      const nft = await NFT.deploy(marketAddress)
+      const nft = await NFT.deploy(managerAddress)
       await nft.deployed()
       const nftContractAddress = nft.address
  
-      await nft.createToken("https://www.mytokenlocation.com")
-      await nft.createToken("https://www.mytokenlocation2.com")
+      await nft.CreateMedalToken("https://ipfs.infura.io/ipfs/QmVZRDT1wjD6GVnKsn2wwMib18hfekknnXUq1YmrnoXV2F ")
+      await nft.CreateMedalToken("https://ipfs.infura.io/ipfs/QmVZRDT1wjD6GVnKsn2wwMib18hfekknnXUq1YmrnoXV2F ")
     
-      await manager.createRecordThrowItem(nftContractAddress, 1)
-      await manager.createRecordThrowItem(nftContractAddress, 2)
+      await manager.CreateDigitalMedal(nftContractAddress, 1)
+      await manager.CreateDigitalMedal(nftContractAddress, 2)
       
       //Use this to transfer the NFT to the Athelete
      // const [_, buyerAddress] = await ethers.getSigners()
