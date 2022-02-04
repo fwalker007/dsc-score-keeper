@@ -28,36 +28,22 @@ contract NFTManager is ReentrancyGuard
 
   mapping(uint256 => MarketItem) private idToMarketItem;
 
-  event MarketItemCreated (
-    uint indexed itemId,
-    address indexed nftContract,
-    uint256 indexed tokenId,
-    address owner
-  );
+  event MarketItemCreated ( uint indexed itemId, address indexed nftContract, uint256 indexed tokenId, address owner );
 
   
   /* Places an item for sale on the marketplace */
-  function createMarketItem(address nftContract, uint256 tokenId ) public payable nonReentrant 
+  function CreateDigitalMedal(address nftContract, uint256 tokenId ) public payable nonReentrant 
   {    
     _itemIds.increment();
     uint256 itemId = _itemIds.current();
   
-    idToMarketItem[itemId] =  MarketItem(
-      itemId,
-      nftContract,
-      tokenId,
-      payable(msg.sender)
-    );
+    idToMarketItem[itemId] =  MarketItem( itemId, nftContract, tokenId, payable(msg.sender) );
 
     IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
 
-    emit MarketItemCreated(
-      itemId,
-      nftContract,
-      tokenId,
-      msg.sender
-    );
+    emit MarketItemCreated( itemId, nftContract, tokenId, msg.sender );
   }
+   
 
    /* Returns onlyl items that a user has purchased */
   function fetchMyNFTs() public view returns (MarketItem[] memory)

@@ -2,6 +2,7 @@ import '../styles/Home.module.css'
 
 import React from "react";
 import Table from "./Table";
+import { useRouter } from 'next/router' 
 
 const getData = () => [
   {
@@ -81,6 +82,13 @@ function App() {
 
   const data = React.useMemo(() => getData(), []);
 
+   //Creates and saves item to IPFS
+   async function CreateDigitalMedalPopup() 
+   {  
+     const router = useRouter() 
+     router.push('/create-item')
+   }
+
   return (
 
       <main>
@@ -91,6 +99,9 @@ function App() {
           <Table columns={columns} data={data} />
         </div>
 
+        <button onClick={CreateDigitalMedalPopup} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+          Create Digital Medals
+        </button>
       </main>
 
   );
