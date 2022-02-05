@@ -1,10 +1,10 @@
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-import Web3Modal from "web3modal"
-
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { useRouter } from 'next/router' 
+import axios from 'axios'
+import Web3Modal from "web3modal"
+import athletesData from "./TestData.json";
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
@@ -15,13 +15,13 @@ import {
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import Manager from '../artifacts/contracts/NFTManager.sol/NFTManager.json'
 
-let rpcEndpoint = "https://8545-fwalker007-dscscorekeepe-vi8aijvwlwp.ws-us30.gitpod.io"
+let rpcEndpoint = "https://8545-fwalker007-dscscorekeepe-ij4wnc60ohi.ws-us30.gitpod.io"
 
 if (process.env.NEXT_PUBLIC_WORKSPACE_URL) 
 {
     rpcEndpoint = process.env.NEXT_PUBLIC_WORKSPACE_URL
 }
-  
+
 export default function Home() 
 {
     const [nfts, setNfts] = useState([])
@@ -34,6 +34,7 @@ export default function Home()
     async function onChange(e) 
     {
       const file = e.target.files[0]
+      
       try 
       {
         console.log("OnChange:" )
@@ -55,37 +56,37 @@ export default function Home()
       }  
     }
   
+    
     //Creates and saves item to IPFS
     async function CreateDigitalMedals() 
     {
-      console.log("Criating digital Medal ..." );
-  
-      //Deconstruct input from form
-      const name = "Samuel Hunter"
-      const description = "School Record Disc"
-
-//      const { name, description, price } = formInput
-//      if (!name || !description || !price || !fileUrl) return
+      const items = await Promise.all(athletesData.map(async myData => 
+        {
+          console.log("Creating digital Medal for ..." + myData.name );
  
-      /* first, upload to IPFS */
-      const data = JSON.stringify({ name, description, image: fileUrl })
-
-      console.log("Data: %s " + data );
-
-      try 
-      {
-        const added = await client.add(data)
-        const url = `https://ipfs.infura.io/ipfs/${added.path}`
+          const name = myData.name
+          const description = myData.decription
   
-        console.log( "Medal added to IPFS : %s ", url )
+          /* Create JSon metadata for IPFS */
+          const data = JSON.stringify({ name , description, image: fileUrl })
   
-        /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
-        createSale(url)
-      } 
-      catch (error) 
-      {
-        console.log('Error uploading file: ', error)
-      }  
+          console.log("Data: %s " + data );
+  
+          try 
+          {
+            const added = await client.add(data)
+            const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      
+            console.log( "Medal added to IPFS : %s ", url )
+      
+            /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
+            createSale(url)
+          } 
+          catch (error) 
+          {
+            console.log('Error uploading file: ', error)
+          } 
+        }))
     }
   
     async function createSale(url) 
@@ -120,7 +121,7 @@ export default function Home()
 
       console.log( "Done Creating medal! " )
 
-      router.push('/')
+    //  router.push('/')
     }
 
     useEffect(() => 
@@ -128,6 +129,13 @@ export default function Home()
         loadNFTs()
     }, [])
 
+    async function TransferToAthlete()
+    {
+      athletesData.map((myData, index) => {
+        console.log(myData.name)
+      })
+    }
+    
     async function loadNFTs() 
     {    
         console.log("Loading NFT from: " + rpcEndpoint);
@@ -160,24 +168,25 @@ export default function Home()
     }
 
     console.log("GOT HERE 2.8 NFTs count: " + nfts.length);
-
     console.log(loadingState);
-    if (loadingState === 'loaded' && !nfts.length) return (
+
+    if (loadingState === 'loaded' && !nfts.length) 
+    return (
+    
       <div>
-      <h1 className="px-20 py-10 text-3xl">No Medals Created</h1>
-      <div className="flex justify-center">
+        <h1 className="px-20 py-10 text-3xl">No Medals Created</h1>
+        <div className="flex justify-center">
+          <div className="flex justify-center">
+            <input type="file" name="Asset" className="my-4" onChange={onChange} />
+            {
+              fileUrl && (<img className="rounded mt-4" width="350" src={fileUrl} />)
+            }
+          </div>
 
-      <input type="file" name="Asset" className="my-4" onChange={onChange} />
-        {
-          fileUrl && (
-            <img className="rounded mt-4" width="350" src={fileUrl} />
-          )
-        }
-
-      <button onClick={CreateDigitalMedals} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
-        Create Digital Medals
-      </button>
-      </div>
+          <button onClick={CreateDigitalMedals} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+          Create Digital Medals
+          </button>
+        </div>
       </div>
       )
 
@@ -186,29 +195,40 @@ export default function Home()
     return (
         <div className="flex justify-center">
 
-        <input type="file" name="Asset" className="my-4" onChange={onChange} />
-        {
-          fileUrl && (
-            <img className="rounded mt-4" width="350" src={fileUrl} />
-          )
-        }
+        <div className="flex justify-center">
+          <input type="file" name="Asset" className="my-4" onChange={onChange} />
+          {
+            fileUrl && (<img className="rounded mt-4" width="350" src={fileUrl} />)
+          }
+        </div>
 
-          <button onClick={CreateDigitalMedals} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+          <button style={{textAlign:"center" }} onClick={CreateDigitalMedals} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
             Create Digital Medals
           </button>
 
-          <div className="px-4" style={{ maxWidth: '1600px' }}>
+          <div className="flex justify-center" style={{height: '100px' }}>
+          <p style={{height: '100px', fontSize: "40px"}}> <b> MEDALS </b></p>
+          </div>
+
+          <div className="px-4" >
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
               {
-                nfts.map((nft, i) => (
-                  <div key={i} className="border shadow rounded-xl overflow-hidden">
-                    <img src={nft.image} />
+                nfts.map((nft, i) => 
+                (
+                  <div  style={{ maxWidth:'500px', border: "3px solid green"}} key={i} className="border shadow rounded-xl overflow-hidden">
+                    <img style={{ height: '300px', display: "block", marginLeft:"auto", marginRight:"auto" }} src={nft.image} />
+                    <div>
+                      <button onClick={TransferToAthlete} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+                        Transfer to Athlete
+                      </button>
+                    </div>
                     <div className="p-4">
-                      <p style={{ height: '64px' }} className="text-2xl font-semibold">{nft.name}</p>
-                      <div style={{ height: '70px', overflow: 'hidden' }}>
+                      <p style={{ height: '8px' }} className="text-2xl font-semibold">{nft.name}</p>
+                      <div style={{ height: '40px', overflow: 'hidden' }}>
                         <p className="text-gray-400">{nft.description}</p>
                       </div>
                     </div>
+
                   </div>
                 ))
               }
