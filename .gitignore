@@ -3,6 +3,7 @@
 .secret
 .infuraid
 config.js
+packageLock.json
 
 # dependencies
 /node_modules
