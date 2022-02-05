@@ -4,7 +4,7 @@ import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { useRouter } from 'next/router' 
 import axios from 'axios'
 import Web3Modal from "web3modal"
-import athletesData from "./TestData.json";
+import athletesData from "./TestData.json"
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
@@ -15,7 +15,7 @@ import {
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import Manager from '../artifacts/contracts/NFTManager.sol/NFTManager.json'
 
-let rpcEndpoint = "https://8545-fwalker007-dscscorekeepe-ij4wnc60ohi.ws-us30.gitpod.io"
+let rpcEndpoint = "https://8545-fwalker007-dscscorekeepe-961ys0coqz9.ws-us30.gitpod.io"
 
 if (process.env.NEXT_PUBLIC_WORKSPACE_URL) 
 {
@@ -188,6 +188,7 @@ export default function Home()
           </button>
         </div>
       </div>
+      
       )
 
     console.log("GOT HERE 3 ");

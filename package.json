@@ -1,5 +1,6 @@
 {
   "name": "disc-score-keeper",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gumgum/react-script-tag": "^0.0.3",
     "@nomiclabs/hardhat-ethers": "^2.0.4",
     "@nomiclabs/hardhat-waffle": "^2.0.2",
     "@openzeppelin/contracts": "^4.4.2",
+    "@web3auth/web3auth": "^0.2.2",
     "axios": "^0.25.0",
     "chai": "^4.3.6",
     "ethereum-waffle": "^3.4.0",
@@ -23,13 +26,14 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-table": "^7.7.0",
-    "tailwindcss": "^3.0.18",
+    "web3": "^1.7.0",
     "web3modal": "^1.9.5"
   },
   "devDependencies": {
-    "autoprefixer": "^10.2.6",
+    "autoprefixer": "^10.4.2",
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.10",
-    "postcss": "^8.3.5"
+    "postcss": "^8.4.6",
+    "tailwindcss": "^3.0.18"
   }
 }
