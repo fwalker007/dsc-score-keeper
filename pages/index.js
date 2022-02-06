@@ -17,6 +17,7 @@ import Manager from '../artifacts/contracts/NFTManager.sol/NFTManager.json'
 
 let rpcEndpoint = "https://8545-fwalker007-dscscorekeepe-961ys0coqz9.ws-us30.gitpod.io"
 
+//let rpcEndpoint = "https://polygon-mumbai.g.alchemy.com/v2/SEAqmZYfd-vPheMwAMeIOGXpgOJytTeT"
 if (process.env.NEXT_PUBLIC_WORKSPACE_URL) 
 {
     rpcEndpoint = process.env.NEXT_PUBLIC_WORKSPACE_URL
