@@ -27,9 +27,9 @@ class QueryLoader extends React.Component
             <script
                 src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
                 type="text/javascript"
-                onCreate={this._onCreate}
-                onSuccess={this._onSuccess}
-                onError={this._onError}
+               // onCreate={this._onCreate}
+               // onSuccess={this._onSuccess}
+               // onError={this._onError}
                 defer
             />
         );

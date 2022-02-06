@@ -27,9 +27,9 @@ class WebMinLoader extends React.Component
             <script
                 src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.7.0/dist/web3.min.js"
                 type="text/javascript"
-                onCreate={this._onCreate}
-                onSuccess={this._onSuccess}
-                onError={this._onError}
+              //  onCreate={this._onCreate}
+              //  onSuccess={this._onSuccess}
+             //   onError={this._onError}
                 defer
             />
         );

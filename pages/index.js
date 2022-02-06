@@ -79,8 +79,8 @@ export default function Home()
       
             console.log( "Medal added to IPFS : %s ", url )
       
-            /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
-            createSale(url)
+            /* after file is uploaded to IPFS, pass the URL to save it on Blockchain */
+            BindMedalToContract(url)
           } 
           catch (error) 
           {
@@ -89,14 +89,25 @@ export default function Home()
         }))
     }
   
-    async function createSale(url) 
+    async function BindMedalToContract(url) 
     {
       console.log( "Adding Medal to contract " )
 
       const web3Modal = new Web3Modal()
+
+
       const connection = await web3Modal.connect()
+
+      if( connection == null )
+      {
+        console.log( "Unable to connect to blockchain ")
+        return;
+      }
+
       const provider = new ethers.providers.Web3Provider(connection)    
       const signer = provider.getSigner()
+
+
       
       /* next, create the item */
       let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
@@ -105,16 +116,16 @@ export default function Home()
       let transaction = await contract.CreateMedalToken(url)
       let tx = await transaction.wait()
   
-      console.log( "Medal token created %d ", transaction )
+      console.log( "Medal token created %d " )
 
       let event = tx.events[0]
       let value = event.args[2]
       let tokenId = value.toNumber()
     
+      console.log( "Medal token created %d ",  tokenId )
+
       /* then list the item for sale on the marketplace */
       contract = new ethers.Contract(nftmanageraddress, Manager.abi, signer)
-     // let listingPrice = await contract.getListingPrice()
-     // listingPrice = listingPrice.toString()
   
       transaction = await contract.CreateDigitalMedal(nftaddress, tokenId)
       await transaction.wait()

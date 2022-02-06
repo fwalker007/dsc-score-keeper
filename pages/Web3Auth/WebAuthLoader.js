@@ -27,8 +27,8 @@ class Web3AuthLoader extends React.Component
             <script
                 src="https://cdn.jsdelivr.net/npm/@web3auth/web3auth@0.2.2/dist/web3auth.umd.min.js"
                 type="text/javascript"
-                onCreate={this._onCreate}
-                onSuccess={this._onSuccess}
+              //  onCreate={this._onCreate}
+              //  onSuccess={this._onSuccess}
                 onError={this._onError}
                 defer
             />

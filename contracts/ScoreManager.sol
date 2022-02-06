@@ -134,6 +134,17 @@ contract ScoreManager
         return meetsCount.current();
     }
 
+
+    function GetRecordThrows() public view returns (uint)
+    {
+        //enumarate thru the score list looking for max scores 
+
+        //add the score to a recods list 
+
+
+    }
+
+    //Utility functins for string support
     function memcmp(bytes memory a, bytes memory b) internal pure returns(bool)
     {
         return (a.length == b.length) && (keccak256(a) == keccak256(b));
