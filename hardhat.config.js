@@ -1,6 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 const fs = require('fs');
-const privateKey = fs.readFileSync(".secret").toString().trim() || "01234567890123456789";
+//const privateKey = fs.readFileSync(".secret").toString().trim() || "01234567890123456789";
 
 module.exports = {
   defaultNetwork: "hardhat",
@@ -8,14 +8,11 @@ module.exports = {
     hardhat: {
       chainId: 1337
     },
-    
-   
-
-    mumbai: {
-      // Alchemy
-      url: `https://polygon-mumbai.g.alchemy.com/v2/SEAqmZYfd-vPheMwAMeIOGXpgOJytTeT`,  
-      accounts: [privateKey]
-    },
+ //   mumbai: {
+ //     // Alchemy
+ //     url: `https://polygon-mumbai.g.alchemy.com/v2/SEAqmZYfd-vPheMwAMeIOGXpgOJytTeT`,  
+ //     accounts: [privateKey]
+ //   },
     /*
     matic: {
       // Infura
