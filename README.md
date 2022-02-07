@@ -10,7 +10,7 @@ To deploy this project to Gitpod, follow these steps:
 
 1. Click this link to deploy
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://fwalker007-dscscorekeepe-h4eg3xg1lce.ws-us30.gitpod.io)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://fwalker007-dscscorekeepe-ddsei5tukqq.ws-us30.gitpod.io)
 
 2. Import the RPC address given to you by GitPod into your MetaMask wallet
 
