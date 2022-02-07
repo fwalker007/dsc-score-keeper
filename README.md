@@ -12,6 +12,8 @@ To deploy this project to Gitpod, follow these steps:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://fwalker007-dscscorekeepe-ddsei5tukqq.ws-us30.gitpod.io)
 
+You must have a MetaMask wallet set up pointing to this project.
+
 2. Import the RPC address given to you by GitPod into your MetaMask wallet
 
 This endpoint will look something like this:
