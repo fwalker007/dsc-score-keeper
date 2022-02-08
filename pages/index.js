@@ -60,9 +60,16 @@ export default function Home()
     
     //Creates and saves item to IPFS
     async function CreateDigitalMedals() 
-    {
-      const items = await Promise.all(athletesData.map(async myData => 
-        {
+    {      
+      let shouldSkip = false;
+
+      const items = athletesData.forEach(async myData => 
+        { 
+          console.log("Testing " + shouldSkip);
+
+          if(shouldSkip)
+            return;
+
           console.log("Creating digital Medal for ..." + myData.name );
  
           const name = myData.name
@@ -73,6 +80,8 @@ export default function Home()
   
           console.log("Data: %s " + data );
   
+          shouldSkip = true;
+          
           try 
           {
             const added = await client.add(data)
@@ -82,12 +91,14 @@ export default function Home()
       
             /* after file is uploaded to IPFS, pass the URL to save it on Blockchain */
             BindMedalToContract(url)
+
           } 
           catch (error) 
           {
             console.log('Error uploading file: ', error)
-          } 
-        }))
+          }
+          
+        })
     }
   
     async function BindMedalToContract(url) 

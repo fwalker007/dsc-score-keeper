@@ -28,6 +28,14 @@ function Marketplace({ Component, pageProps })
           <Table data={athletesData} />
       </div>
 
+      <div>
+
+      </div>
+      <div className="place-content-center"  style={{textAlign:"center" }}>
+          <button className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg ">
+              Save Scores
+          </button>
+      </div>
       <Component {...pageProps} />
     </div>
   )

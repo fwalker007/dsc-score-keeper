@@ -117,13 +117,23 @@ class Web3AuthLogin extends Component
     {
         return (
             <React.Fragment>
-                <p className="text-4xl font-bold" style={{height: '100px', fontSize: "40px"}} >
-                     <b>SCORE KEEPER {this.state.msbg} </b>
-                </p>
-                <button onClick={this.login} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+              <div className="h-56 grid grid-cols-3 gap-4 content-start">
+                <div>
+                  
+                </div>
+
+                <div>
+                  <p className="text-4xl font-bold" style={{height: '100px', fontSize: "40px"}} >
+                    <b>SCORE KEEPER {this.state.msbg} </b>
+                  </p>
+                </div>
+                <div>
+                    <button onClick={this.login} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
                     Login
                 </button>
+                </div>
               
+              </div>
             </React.Fragment>
         );
     }
