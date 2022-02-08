@@ -4,7 +4,7 @@ import Table from "./Table"
 import WebAuthLoader from "./Web3Auth/WebAuthLoader.js"
 import QueryLoader from "./Web3Auth/QueryLoader.js"
 import Web3MinLoader from "./Web3Auth/WebMinLoader.js"
-import Web3AuthLogin from "./components/Web3AuthoLogin"
+import Web3AuthLogin from "./Web3Auth/Web3AuthoLogin"
 import athletesData from "./TestData.json"
 
  
